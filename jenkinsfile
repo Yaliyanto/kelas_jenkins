@@ -1,13 +1,12 @@
 pipeline {
-    agent any // Specifies that the pipeline can run on any available agent
+    agent any
 
     stages {
-        stage('setup venv') {
+        stage('Setup venv') {
             steps {
                 sh '''
                 python3 -m venv venv
-                source venv/bin/activate
-                pip install requests
+                venv/bin/python -m pip install requests
                 '''
             }
         }
@@ -15,8 +14,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh '''
-                source venv/bin/activate
-                python api.py
+                venv/bin/python api.py
                 '''
             }
         }
