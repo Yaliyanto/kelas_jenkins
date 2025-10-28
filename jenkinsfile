@@ -1,0 +1,36 @@
+pipeline {
+    agent any // Specifies that the pipeline can run on any available agent
+
+    stages {
+        stage('setup venv') {
+            steps {
+                sh '''
+                python3 -m venv venv
+                source venv/bin/activate
+                pip install requests
+                '''
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh '''
+                source venv/bin/activate
+                python api.py
+                '''
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline finished.'
+        }
+        success {
+            echo 'Pipeline successful!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
+    }
+}
