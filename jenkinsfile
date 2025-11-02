@@ -1,20 +1,9 @@
 pipeline {
     agent any
 
-    stages {
-      
-        stage('Check Python Runner') {
-            steps {
-                sh '''
-                docker ps
-                '''
-            }
-        }
-    }
-
     // stages {
       
-    //     stage('Test') {
+    //     stage('Check Python') {
     //         steps {
     //             sh '''
     //             python api.py
@@ -22,6 +11,17 @@ pipeline {
     //         }
     //     }
     // }
+
+    stages {
+      
+        stage('Test') {
+            steps {
+                sh '''
+                python api.py
+                '''
+            }
+        }
+    }
 
     post {
         always {
