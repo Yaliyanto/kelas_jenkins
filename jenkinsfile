@@ -3,14 +3,25 @@ pipeline {
 
     stages {
       
-        stage('Test') {
+        stage('Check Python Runner') {
             steps {
                 sh '''
-                python api.py
+                docker ps
                 '''
             }
         }
     }
+
+    // stages {
+      
+    //     stage('Test') {
+    //         steps {
+    //             sh '''
+    //             python api.py
+    //             '''
+    //         }
+    //     }
+    // }
 
     post {
         always {
