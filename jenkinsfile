@@ -1,29 +1,23 @@
 pipeline {
     agent any
 
-    stages {  
-        stage('Setup Environment') {
-            steps {
-                echo "Setting up virtual environment inside python-runner..."
-                sh '''
-                    docker exec python-runner bash -c "
-                        python3 -m venv venv &&
-                        . venv/bin/activate &&
-                        pip install --upgrade pip &&
-                        
-                    "
-                '''
-            }
-        }
+    // stages {
+      
+    //     stage('Check Python') {
+    //         steps {
+    //             sh '''
+    //             python api.py
+    //             '''
+    //         }
+    //     }
+    // }
 
-        stage('Run Tests') {
+    stages {
+      
+        stage('Test') {
             steps {
-                echo "Running pytest inside python-runner..."
                 sh '''
-                    docker exec python-runner bash -c "
-                        . venv/bin/activate &&
-                        python api.py
-                    "
+                docker exec python-runner bash -c "python api.py"
                 '''
             }
         }
@@ -31,13 +25,13 @@ pipeline {
 
     post {
         always {
-            echo "Pipeline execution completed."
-        }
-        failure {
-            echo "❌ Some tests failed."
+            echo 'Pipeline finished.'
         }
         success {
-            echo "✅ All tests passed successfully."
+            echo 'Pipeline successful!'
+        }
+        failure {
+            echo 'Pipeline failed!'
         }
     }
 }
