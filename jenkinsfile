@@ -17,7 +17,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh '''
-                docker exec python-runner bash -c "python api.py"
+                docker exec -u root python-runner bash -c "python api.py"
                 '''
             }
         }
